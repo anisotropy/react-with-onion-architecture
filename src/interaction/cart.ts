@@ -15,8 +15,13 @@ let shoppingCart: Cart = {};
 //   }
 // }
 
-export function addItemToCart(name: string, price: number) {
-  shoppingCart = addItem(shoppingCart, name, price);
+export function addItemToCart(
+  name: string,
+  price: number,
+  quantity: number,
+  shipping: number
+) {
+  shoppingCart = addItem(shoppingCart, name, price, quantity, shipping);
   const total = calcTotal(shoppingCart);
   // setCartTotalDom(total)
   // updateShippingIcons(shoppingCart)
