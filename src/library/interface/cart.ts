@@ -1,4 +1,4 @@
-import { get, remove, set } from "library/base/object";
+import { get, remove, set } from "library/layer2/object";
 import { Item, makeItem } from "library/layer1/item";
 
 export type Cart = { [name: string]: Item };

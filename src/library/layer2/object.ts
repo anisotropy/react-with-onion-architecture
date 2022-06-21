@@ -1,11 +1,15 @@
+import { withCopy } from "library/layer3/object";
+
 export function set<T, K extends keyof T>(object: T, key: K, value: T[K]) {
-  return { ...object, [key]: value };
+  return withCopy(object, (copy) => {
+    copy[key] = value;
+  });
 }
 
 export function remove<T, K extends keyof T>(object: T, key: K) {
-  const copy = { ...object };
-  delete copy[key];
-  return copy;
+  return withCopy(object, (copy) => {
+    delete copy[key];
+  });
 }
 
 export function get<T, K extends keyof T>(object: T, key: K) {

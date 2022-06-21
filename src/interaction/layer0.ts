@@ -1,4 +1,5 @@
 import { Cart, addItem, calcTotal } from "library/interface/cart";
+import { withLogging, wrapLogging } from "./layer1";
 
 let shoppingCart: Cart = {};
 
@@ -23,8 +24,20 @@ export function addItemToCart(
 ) {
   shoppingCart = addItem(shoppingCart, name, price, quantity, shipping);
   const total = calcTotal(shoppingCart);
+  withLogging(
+    () => {
+      // do something
+    },
+    (error) => {
+      // do something
+    }
+  );
   // setCartTotalDom(total)
   // updateShippingIcons(shoppingCart)
   // updateTaxDom(total)
   // logAddToCart()
 }
+
+export const saveUserDataWithLogging = wrapLogging((id: string) => {
+  // save user data
+});

@@ -1,4 +1,4 @@
-import { set } from "library/base/object";
+import { set } from "library/layer2/object";
 
 export type Item = {
   name: string;
