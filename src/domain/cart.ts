@@ -1,12 +1,12 @@
 import { calcTotal, Cart, isInCart } from "library/interface/cart";
-import { calcTax as commonCalcTax } from "./common";
+import { calcTax } from "./common";
 
 export function getFreeShipping(cart: Cart) {
   return calcTotal(cart) >= 20;
 }
 
-export function calcTax(cart: Cart) {
-  return commonCalcTax(calcTotal(cart));
+export function cartTax(cart: Cart) {
+  return calcTax(calcTotal(cart));
 }
 
 export function getsWatchDiscount(cart: Cart) {
