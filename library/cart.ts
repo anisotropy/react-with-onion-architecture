@@ -6,6 +6,7 @@ import {
 import {
   arrayGet,
   arrayPush,
+  arrayRemove,
   arraySet,
   objectSet,
 } from "./layer/layer/functions";
@@ -26,4 +27,17 @@ export function putItem(cart: Cart, itemToPut: CartItemWighoutQuantity) {
     const cartItem = makeCartItem({ ...itemToPut, quantity: 1 });
     return arrayPush(cart, cartItem);
   }
+}
+
+export function calcTotal(cart: Cart) {
+  return cart.reduce((total, item) => total + item.price, 0);
+}
+
+export function removeItem(cart: Cart, index: number) {
+  return arrayRemove(cart, index);
+}
+
+export function isInCart(cart: Cart, name: string) {
+  const item = cart.find((item) => item.name === name);
+  return Boolean(item);
 }
