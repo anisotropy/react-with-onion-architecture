@@ -14,11 +14,11 @@ type Items = {
 
 type Data = { items: Items };
 
-export default function useItems() {
+export default function useShoppingItems() {
   const { data, error } = useSWR<AxiosResponse<Data>>("/api/items", axios.get);
 
   return {
-    items: data?.data.items,
+    shoppingItems: data?.data.items,
     isLoading: !data && !error,
     isError: Boolean(error),
   };
