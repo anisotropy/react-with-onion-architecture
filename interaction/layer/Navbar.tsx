@@ -6,6 +6,9 @@ export default function Navbar() {
       <Link href="/">
         <a>Home</a>
       </Link>
+      <Link href="/shopping">
+        <a>Shopping</a>
+      </Link>
       <Link href="/cart">
         <a>Cart</a>
       </Link>
