@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 type Data = { items: ShoppingItems };
 
-export default function useShoppingItems() {
+export function useShoppingItems() {
   const { data, error } = useSWR<AxiosResponse<Data>>("/api/items", axios.get);
 
   return {

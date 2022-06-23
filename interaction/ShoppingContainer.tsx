@@ -1,20 +1,18 @@
 import { putItem } from "domain/cart";
-import { useSetRecoilState } from "recoil";
-import { cartState } from "./cartState";
-import { Shopping } from "./layer/Shopping";
-import useShoppingItems from "./useShoppingItems";
+import { Shopping } from "./components/Shopping";
+import { useShoppingItems } from "./hooks/useShoppingItems";
+import { useCartState } from "./hooks/useCart";
 
 export default function ShoppingPage() {
   const { shoppingItems, isLoading, isError } = useShoppingItems();
-
-  const setCart = useSetRecoilState(cartState);
+  const cart = useCartState();
 
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
   if (!shoppingItems) return null;
 
   const onPut = (id: number) => {
-    setCart((cart) => putItem(cart, shoppingItems[id]));
+    cart.set((prevCart) => putItem(prevCart, shoppingItems[id]));
   };
 
   return <Shopping shoppingItems={shoppingItems} onPut={onPut} />;

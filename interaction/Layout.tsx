@@ -1,7 +1,7 @@
 import React from "react";
 import { RecoilRoot } from "recoil";
-import Footer from "./layer/Footer";
-import Navbar from "./layer/Navbar";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 type LayoutProps = { children: React.ReactNode };
 

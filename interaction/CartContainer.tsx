@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { cartState } from "./cartState";
+import { cartState } from "./hooks/states/cartState";
 
 export default function CartPage() {
   const cart = useRecoilValue(cartState);

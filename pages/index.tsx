@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import HomePage from "interaction/HomePage";
+import HomeContainer from "interaction/HomeContainer";
 
 const Home: NextPage = () => {
-  return <HomePage />;
+  return <HomeContainer />;
 };
 
 export default Home;
