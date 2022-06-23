@@ -3,5 +3,4 @@ export type ShoppingItem = {
   name: string;
   price: number;
   shipping: number;
-  quantity: number;
 };
