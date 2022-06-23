@@ -12,6 +12,7 @@ export default function Layout({ children }: LayoutProps) {
       <Footer />
       <style jsx>{`
         main {
+          margin: 1rem;
           min-height: 200px;
         }
       `}</style>
