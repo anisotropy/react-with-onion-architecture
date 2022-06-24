@@ -11,6 +11,8 @@ import {
   objectSet,
 } from "./layer/layer/functions";
 
+export { type CartItem };
+
 export type Cart = CartItem[];
 
 export function putItem(cart: Cart, itemToPut: CartItemWighoutQuantity) {

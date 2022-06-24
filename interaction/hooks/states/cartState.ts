@@ -1,12 +1,5 @@
 import { atom } from "recoil";
-
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  shipping: number;
-  quantity: number;
-};
+import { CartItem } from "domain/cart";
 
 export const cartState = atom<CartItem[]>({
   key: "cart",
