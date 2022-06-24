@@ -1,1 +1,4 @@
-export { type ShoppingItems } from "library/shopping";
+import { ShoppingItems as Items, ShoppingItem as Item } from "library/shopping";
+
+export type ShoppingItems = Items;
+export type ShoppingItem = Item;

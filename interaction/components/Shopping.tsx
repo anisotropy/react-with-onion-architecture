@@ -1,5 +1,5 @@
 import { ShoppingItems } from "domain/shopping";
-import Item from "./layer/Item";
+import ShoppingItem from "./layer/ShoppingItem";
 
 type ShoppingProps = {
   shoppingItems: ShoppingItems;
@@ -11,7 +11,7 @@ export function Shopping({ shoppingItems, onAdd }: ShoppingProps) {
     <div>
       <div className="items">
         {Object.values(shoppingItems).map((item) => (
-          <Item key={item.id} {...item} onAdd={onAdd} />
+          <ShoppingItem key={item.id} item={item} onAdd={onAdd} />
         ))}
       </div>
       <style jsx>{`
