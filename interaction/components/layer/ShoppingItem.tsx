@@ -8,11 +8,25 @@ type ShoppingItemProps = {
 export default function ShoppingItem({ item, onAdd }: ShoppingItemProps) {
   const onClickAdd = () => onAdd(item.id);
   return (
-    <div>
-      <b>{item.name}</b>
-      <div>price: {item.price}</div>
-      <div>shipping: {item.shipping}</div>
-      <button onClick={onClickAdd}>Add to cart</button>
-    </div>
+    <>
+      <div className="shoppingitem">
+        <b>{item.name}</b>
+        <div>price: {item.price}</div>
+        <div>shipping: {item.shipping}</div>
+        <button onClick={onClickAdd}>Add to cart</button>
+      </div>
+      <style jsx>{`
+        .shoppingitem {
+          border: solid 1px #aaa;
+          padding: 1rem;
+          width: 20rem;
+          border-radius: 0.5rem;
+        }
+        button {
+          display: block;
+          margin-top: 0.5rem;
+        }
+      `}</style>
+    </>
   );
 }
