@@ -1,38 +1,33 @@
-import {
-  CartItem,
-  CartItemWighoutQuantity,
-  makeCartItem,
-} from "./layer/cartItem";
-import {
-  arrayGet,
-  arrayPush,
-  arrayRemove,
-  arraySet,
-  objectSet,
-} from "./layer/layer/functions";
+import { CartItem, makeCartItem } from "./layer/cartItem";
+import { arrayFind, arrayRemove } from "./layer/layer/functions";
 
 export { type CartItem };
 
 export type Cart = CartItem[];
 
-export function putItem(cart: Cart, itemToPut: CartItemWighoutQuantity) {
-  const itemIndex = cart.findIndex((item) => item.id === itemToPut.id);
-  if (itemIndex >= 0) {
-    const cartItem = arrayGet(cart, itemIndex);
-    const updatedCartItem = objectSet(
-      cartItem,
-      "quantity",
-      cartItem.quantity + 1
-    );
-    return arraySet(cart, itemIndex, updatedCartItem);
-  } else {
-    const cartItem = makeCartItem({ ...itemToPut, quantity: 1 });
-    return arrayPush(cart, cartItem);
-  }
+type ItemToAdd = Omit<CartItem, "amount" | "quantity"> & { price: number };
+
+export function addToCart(cart: Cart, itemToAdd: ItemToAdd) {
+  return arrayFind(
+    cart,
+    (item) => item.id === itemToAdd.id,
+    (itemCopy) => {
+      itemCopy.quantity += 1;
+      itemCopy.amount += itemToAdd.price;
+    },
+    (cartCopy) => {
+      const newItem = makeCartItem({
+        ...itemToAdd,
+        amount: itemToAdd.price,
+        quantity: 1,
+      });
+      cartCopy.push(newItem);
+    }
+  );
 }
 
 export function calcTotal(cart: Cart) {
-  return cart.reduce((total, item) => total + item.price, 0);
+  return cart.reduce((total, item) => total + item.amount, 0);
 }
 
 export function removeItem(cart: Cart, index: number) {

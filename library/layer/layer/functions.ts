@@ -16,6 +16,29 @@ export function arrayRemove<T>(array: T[], index: number) {
   return withArrayCopy(array, (copy) => copy.splice(index, 1));
 }
 
+export function arrayFind<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+  modify: (valueCopy: T) => void,
+  fallback?: (arrayCopy: T[]) => void
+) {
+  const index = array.findIndex(predicate);
+  if (index >= 0) {
+    return withArrayCopy(array, (copy) => {
+      const value = copy[index];
+      copy[index] = withObjectCopy(value, (copy) => {
+        modify(copy);
+      });
+    });
+  } else if (fallback) {
+    return withArrayCopy(array, (copy) => {
+      fallback(copy);
+    });
+  } else {
+    return array;
+  }
+}
+
 export function objectSet<T, K extends keyof T>(
   object: T,
   key: K,

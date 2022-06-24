@@ -7,7 +7,7 @@ export default function Cart({ cartItems }: CartProps) {
   return (
     <div>
       {cartItems.map((item) => (
-        <CartItem key={item.id} {...item} />
+        <CartItem key={item.id} item={item} />
       ))}
       <style jsx>{`
         div > :global(*) {

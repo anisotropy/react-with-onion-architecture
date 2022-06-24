@@ -1,25 +1,17 @@
+import { CartItem as Item } from "domain/cart";
+
 type CartItemProps = {
-  id: number;
-  name: string;
-  price: number;
-  shipping: number;
-  quantity: number;
+  item: Item;
 };
 
-export default function Item({
-  id,
-  name,
-  price,
-  shipping,
-  quantity,
-}: CartItemProps) {
+export default function CartItem({ item }: CartItemProps) {
   return (
     <>
       <div className="cartitem">
-        <b>{name}</b>
-        <div>qauntity: {quantity}</div>
-        <div>price: {price}</div>
-        <div>shipping: {shipping}</div>
+        <b>{item.name}</b>
+        <div>qauntity: {item.quantity}</div>
+        <div>total amount: {item.amount}</div>
+        <div>shipping: {item.shipping}</div>
       </div>
       <style jsx>{`
         .cartitem {

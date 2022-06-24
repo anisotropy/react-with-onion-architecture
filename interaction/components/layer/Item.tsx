@@ -3,17 +3,17 @@ type ItemProps = {
   name: string;
   price: number;
   shipping: number;
-  onPut: (id: number) => void;
+  onAdd: (id: number) => void;
 };
 
-export default function Item({ id, name, price, shipping, onPut }: ItemProps) {
-  const onClickPut = () => onPut(id);
+export default function Item({ id, name, price, shipping, onAdd }: ItemProps) {
+  const onClickAdd = () => onAdd(id);
   return (
     <div>
       <b>{name}</b>
       <div>price: {price}</div>
       <div>shipping: {shipping}</div>
-      <button onClick={onClickPut}>Put</button>
+      <button onClick={onClickAdd}>Add to cart</button>
     </div>
   );
 }

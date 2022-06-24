@@ -1,4 +1,4 @@
-import { putItem } from "domain/cart";
+import { addToCart } from "domain/cart";
 import { Shopping } from "./components/Shopping";
 import { useShoppingItems } from "./hooks/useShoppingItems";
 import { useCartState } from "./hooks/useCart";
@@ -11,9 +11,9 @@ export default function ShoppingPage() {
   if (isLoading) return <div>Loading...</div>;
   if (!shoppingItems) return null;
 
-  const onPut = (id: number) => {
-    cart.set((prevCart) => putItem(prevCart, shoppingItems[id]));
+  const onAdd = (id: number) => {
+    cart.set((prevCart) => addToCart(prevCart, shoppingItems[id]));
   };
 
-  return <Shopping shoppingItems={shoppingItems} onPut={onPut} />;
+  return <Shopping shoppingItems={shoppingItems} onAdd={onAdd} />;
 }
