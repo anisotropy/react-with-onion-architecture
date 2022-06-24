@@ -1,15 +1,7 @@
-import { useRecoilValue } from "recoil";
-import { cartState } from "./hooks/states/cartState";
+import { useCartState } from "./hooks/useCart";
+import Cart from "./components/Cart";
 
-export default function CartPage() {
-  const cart = useRecoilValue(cartState);
-  return (
-    <div>
-      {cart.map((item) => (
-        <div key={item.id}>
-          {item.name} {item.quantity}
-        </div>
-      ))}
-    </div>
-  );
+export default function CartContainer() {
+  const cartItems = useCartState();
+  return <Cart cartItems={cartItems.value} />;
 }

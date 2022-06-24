@@ -1,7 +1,7 @@
 import { putItem, CartItem, Cart, calcTotal, isInCart } from "library/cart";
 import { calcTax } from "./layer/functions";
 
-export { type CartItem, putItem };
+export { type CartItem, type Cart, putItem };
 
 export function getFreeShipping(cart: Cart) {
   return calcTotal(cart) >= 20;
