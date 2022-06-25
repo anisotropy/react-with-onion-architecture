@@ -1,5 +1,5 @@
 import { CartItem, makeCartItem } from "./layer/cartItem";
-import { arrayFind, arrayRemove } from "./layer/layer/functions";
+import { arrayFind, arrayRemove } from "./layer/layer/common";
 
 export { type CartItem };
 

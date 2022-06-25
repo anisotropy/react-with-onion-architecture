@@ -1,4 +1,4 @@
-import { withArrayCopy, withObjectCopy } from "./layer/functions";
+import { withArrayCopy, withObjectCopy } from "./layer/common";
 
 export function arraySet<T>(array: T[], index: number, value: T) {
   return withArrayCopy(array, (copy) => (copy[index] = value));
