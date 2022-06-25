@@ -1,7 +1,15 @@
-import { addToCart, CartItem, Cart, calcTotal, isInCart } from "library/cart";
+import {
+  addToCart,
+  CartItem,
+  Cart,
+  calcTotal,
+  isInCart,
+  cartMap,
+  isCartEmpty,
+} from "library/cart";
 import { calcTax } from "./layer/functions";
 
-export { type CartItem, type Cart, addToCart };
+export { type CartItem, type Cart, addToCart, cartMap, isCartEmpty };
 
 export function getFreeShipping(cart: Cart) {
   return calcTotal(cart) >= 20;

@@ -38,3 +38,11 @@ export function isInCart(cart: Cart, name: string) {
   const item = cart.find((item) => item.name === name);
   return Boolean(item);
 }
+
+export function isCartEmpty(cart: Cart) {
+  return cart.length === 0;
+}
+
+export function cartMap<T>(cart: Cart, callbcak: (item: CartItem) => T) {
+  return cart.map(callbcak);
+}

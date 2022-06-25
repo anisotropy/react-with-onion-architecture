@@ -1,19 +1,33 @@
-import { Cart as CartItems } from "domain/cart";
+import { Cart as CartItems, cartMap, isCartEmpty } from "domain/cart";
 import CartItem from "./layer/CartItem";
+import Button from "./layer/layer/Button";
 
-type CartProps = { cartItems: CartItems };
+type CartProps = {
+  cartItems: CartItems;
+  onPurchase: () => void;
+};
 
-export default function Cart({ cartItems }: CartProps) {
+export default function Cart({ cartItems, onPurchase }: CartProps) {
   return (
-    <div>
-      {cartItems.map((item) => (
-        <CartItem key={item.id} item={item} />
-      ))}
+    <>
+      <div className="cartitems">
+        {cartMap(cartItems, (item) => (
+          <CartItem key={item.id} item={item} />
+        ))}
+      </div>
+      {isCartEmpty(cartItems) ? null : (
+        <div className="button-wrapper">
+          <Button text="Purchase" onClick={onPurchase} />
+        </div>
+      )}
       <style jsx>{`
-        div > :global(*) {
+        .cartitems > :global(*) {
+          margin-top: 1rem;
+        }
+        .button-wrapper {
           margin-top: 1rem;
         }
       `}</style>
-    </div>
+    </>
   );
 }
