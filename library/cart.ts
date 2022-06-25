@@ -27,8 +27,15 @@ export function addToCart(cart: Cart, itemToAdd: ItemToAdd) {
   );
 }
 
-export function calcTotal(cart: Cart) {
-  return cart.reduce((total, item) => total + item.amount, 0);
+export function calcTotal(cart: Cart, field: keyof CartItem) {
+  return cart.reduce((total, item) => {
+    const value = item[field];
+    if (typeof value === "number") {
+      return total + value;
+    } else {
+      return total;
+    }
+  }, 0);
 }
 
 export function removeItem(cart: Cart, index: number) {
@@ -54,4 +61,16 @@ export function emptyCart() {
 
 export function copyCart(cart: Cart) {
   return cart.map((item) => withObjectCopy(item, (itemCopy) => itemCopy));
+}
+
+export function cartFind(
+  cart: Cart,
+  name: string,
+  modify: (item: CartItem) => void
+) {
+  return arrayFind(
+    cart,
+    (item) => item.name === name,
+    (item) => modify(item)
+  );
 }
