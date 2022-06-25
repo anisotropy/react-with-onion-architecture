@@ -1,5 +1,6 @@
 import { CartItem, makeCartItem } from "./layer/cartItem";
 import { arrayFind, arrayRemove } from "./layer/layer/common";
+import { withObjectCopy } from "./layer/layer/layer/common";
 
 export { type CartItem };
 
@@ -45,4 +46,12 @@ export function isCartEmpty(cart: Cart) {
 
 export function cartMap<T>(cart: Cart, callbcak: (item: CartItem) => T) {
   return cart.map(callbcak);
+}
+
+export function emptyCart() {
+  return [];
+}
+
+export function copyCart(cart: Cart) {
+  return cart.map((item) => withObjectCopy(item, (itemCopy) => itemCopy));
 }

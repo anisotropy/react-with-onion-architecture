@@ -3,18 +3,19 @@ import Cart from "./components/Cart";
 import { purchase } from "./functions/purhase";
 import { useState } from "react";
 import CartLayer from "./components/CartLayer";
-import PurchasedCart from "./components/PurchasedCart";
+import CartAfterPurchase from "./components/CartAfterPurchase";
+import { emptyCart, Cart as CartItems, copyCart } from "domain/cart";
 
 export default function CartContainer() {
   const cartItems = useCartState();
-  const [isPurchased, setIsPurchased] = useState(false);
+  const [purchasedItems, setPurchasedItems] = useState<CartItems | null>(null);
   const [isError, setIsError] = useState(false);
 
   const onPurchase = async () => {
     try {
       await purchase(cartItems.value);
-      cartItems.set([]);
-      setIsPurchased(true);
+      setPurchasedItems(copyCart(cartItems.value));
+      cartItems.set(emptyCart());
     } catch (error) {
       setIsError(true);
     }
@@ -22,8 +23,8 @@ export default function CartContainer() {
 
   return (
     <CartLayer>
-      {isPurchased ? (
-        <PurchasedCart />
+      {purchasedItems ? (
+        <CartAfterPurchase items={purchasedItems} />
       ) : (
         <Cart cartItems={cartItems.value} onPurchase={onPurchase} />
       )}

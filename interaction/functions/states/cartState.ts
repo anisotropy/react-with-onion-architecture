@@ -1,7 +1,7 @@
 import { atom } from "recoil";
-import { CartItem } from "domain/cart";
+import { CartItem, emptyCart } from "domain/cart";
 
 export const cartState = atom<CartItem[]>({
   key: "cart",
-  default: [],
+  default: emptyCart(),
 });
