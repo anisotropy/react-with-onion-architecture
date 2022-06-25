@@ -10,15 +10,19 @@ type CartProps = {
 export default function Cart({ cartItems, onPurchase }: CartProps) {
   return (
     <>
-      <div className="cartitems">
-        {cartMap(cartItems, (item) => (
-          <CartItem key={item.id} item={item} />
-        ))}
-      </div>
-      {isCartEmpty(cartItems) ? null : (
-        <div className="button-wrapper">
-          <Button text="Purchase" onClick={onPurchase} />
-        </div>
+      {isCartEmpty(cartItems) ? (
+        <p>No items</p>
+      ) : (
+        <>
+          <div className="cartitems">
+            {cartMap(cartItems, (item) => (
+              <CartItem key={item.id} item={item} />
+            ))}
+          </div>
+          <div className="button-wrapper">
+            <Button text="Purchase" onClick={onPurchase} />
+          </div>
+        </>
       )}
       <style jsx>{`
         .cartitems > :global(*) {

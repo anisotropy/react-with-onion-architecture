@@ -17,5 +17,5 @@ export default function usePurchase(cart: Cart) {
     cartItems.initialize();
   });
 
-  return { items: data?.data.cart, error: true, callback, reset };
+  return { items: data?.data.cart, error, callback, reset };
 }
