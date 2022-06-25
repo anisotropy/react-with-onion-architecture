@@ -1,32 +1,20 @@
-import { useCartState } from "./functions/useCart";
+import { useCartState } from "./functions/layer/useCart";
 import Cart from "./components/Cart";
-import { purchase } from "./functions/purhase";
-import { useState } from "react";
 import CartLayer from "./components/CartLayer";
 import CartAfterPurchase from "./components/CartAfterPurchase";
-import { emptyCart, Cart as CartItems, copyCart } from "domain/cart";
+import usePurchase from "./functions/usePurchase";
 
 export default function CartContainer() {
   const cartItems = useCartState();
-  const [purchasedItems, setPurchasedItems] = useState<CartItems | null>(null);
-  const [isError, setIsError] = useState(false);
 
-  const onPurchase = async () => {
-    try {
-      await purchase(cartItems.value);
-      setPurchasedItems(copyCart(cartItems.value));
-      cartItems.set(emptyCart());
-    } catch (error) {
-      setIsError(true);
-    }
-  };
+  const purchase = usePurchase(cartItems.value);
 
   return (
     <CartLayer>
-      {purchasedItems ? (
-        <CartAfterPurchase items={purchasedItems} />
+      {purchase.items ? (
+        <CartAfterPurchase items={purchase.items} />
       ) : (
-        <Cart cartItems={cartItems.value} onPurchase={onPurchase} />
+        <Cart cartItems={cartItems.value} onPurchase={purchase.callback} />
       )}
     </CartLayer>
   );

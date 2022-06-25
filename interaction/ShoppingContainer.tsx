@@ -1,7 +1,7 @@
 import { addToCart } from "domain/cart";
 import { Shopping } from "./components/Shopping";
 import { useShoppingItems } from "./functions/useShoppingItems";
-import { useCartState } from "./functions/useCart";
+import { useCartState } from "./functions/layer/useCart";
 
 export default function ShoppingPage() {
   const { shoppingItems, isLoading, isError } = useShoppingItems();

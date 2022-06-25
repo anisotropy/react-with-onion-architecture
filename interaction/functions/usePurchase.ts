@@ -1,17 +1,21 @@
 import axios from "axios";
 import { Cart } from "domain/cart";
 import { useCallback } from "react";
-import { useAsync } from "./layer/common";
+import { useAsync } from "./layer/layer/common";
+import { useCartState } from "./layer/useCart";
 
-type PurchaseRes = Cart;
+type PurchaseRes = { cart: Cart };
 
 export default function usePurchase(cart: Cart) {
-  const asyncCallback = useCallback(async () => {
+  const fetcher = useCallback(async () => {
     return await axios.post<PurchaseRes>("/api/purchase", cart);
   }, [cart]);
 
-  const { isCalled, success, data, error, callback, reset } =
-    useAsync(asyncCallback);
+  const cartItems = useCartState();
 
-  return { isCalled, success, data, error, callback, reset };
+  const { data, error, callback, reset } = useAsync(fetcher, () => {
+    cartItems.initialize();
+  });
+
+  return { items: data?.data.cart, error, callback, reset };
 }
