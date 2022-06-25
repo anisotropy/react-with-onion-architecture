@@ -23,7 +23,7 @@ export default function ShoppingItem({ item, onAdd }: ShoppingItemProps) {
           width: 20rem;
           border-radius: 0.5rem;
         }
-        button {
+        .shoppingitem > :global(button) {
           display: block;
           margin-top: 0.5rem;
         }
