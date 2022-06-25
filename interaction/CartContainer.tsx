@@ -3,6 +3,7 @@ import Cart from "./components/Cart";
 import CartLayer from "./components/CartLayer";
 import CartAfterPurchase from "./components/CartAfterPurchase";
 import usePurchase from "./functions/usePurchase";
+import PurchaseError from "./components/PurchaseError";
 
 export default function CartContainer() {
   const cartItems = useCartState();
@@ -11,7 +12,9 @@ export default function CartContainer() {
 
   return (
     <CartLayer>
-      {purchase.items ? (
+      {purchase.error ? (
+        <PurchaseError />
+      ) : purchase.items ? (
         <CartAfterPurchase items={purchase.items} />
       ) : (
         <Cart cartItems={cartItems.value} onPurchase={purchase.callback} />
