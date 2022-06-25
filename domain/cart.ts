@@ -9,7 +9,7 @@ import {
   emptyCart,
   copyCart,
 } from "library/cart";
-import { calcTax } from "./layer/functions";
+import { calcTax } from "./layer/common";
 
 export {
   type CartItem,
