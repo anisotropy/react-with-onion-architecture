@@ -1,4 +1,5 @@
 import { ShoppingItem as Item } from "domain/shopping";
+import Button from "./layer/Button";
 
 type ShoppingItemProps = {
   item: Item;
@@ -13,7 +14,7 @@ export default function ShoppingItem({ item, onAdd }: ShoppingItemProps) {
         <b>{item.name}</b>
         <div>price: {item.price}</div>
         <div>shipping: {item.shipping}</div>
-        <button onClick={onClickAdd}>Add to cart</button>
+        <Button text="Add to cart" onClick={onClickAdd} />
       </div>
       <style jsx>{`
         .shoppingitem {
