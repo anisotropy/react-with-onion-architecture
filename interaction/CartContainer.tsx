@@ -1,10 +1,9 @@
 import { useCartState, useCartStatus } from "./functions/layer/useCart";
 import Cart from "./components/Cart";
-import CartLayer from "./components/CartLayer";
+import CartLayout from "./components/CartLayout";
 import CartAfterPurchase from "./components/CartAfterPurchase";
 import usePurchase from "./functions/usePurchase";
 import PurchaseError from "./components/PurchaseError";
-import { discountWatch } from "domain/cart";
 
 export default function CartContainer() {
   const cartItems = useCartState();
@@ -12,7 +11,7 @@ export default function CartContainer() {
   const purchase = usePurchase(cartItems.value);
 
   return (
-    <CartLayer>
+    <CartLayout>
       {purchase.error ? (
         <PurchaseError />
       ) : purchase.items ? (
@@ -24,6 +23,6 @@ export default function CartContainer() {
           onPurchase={purchase.callback}
         />
       )}
-    </CartLayer>
+    </CartLayout>
   );
 }
