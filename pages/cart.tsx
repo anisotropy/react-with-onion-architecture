@@ -1,8 +1,8 @@
-import CartContainer from "interaction/CartContainer";
+import CartPage from "interaction/CartPage";
 import type { NextPage } from "next";
 
 const Cart: NextPage = () => {
-  return <CartContainer />;
+  return <CartPage />;
 };
 
 export default Cart;

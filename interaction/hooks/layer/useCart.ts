@@ -1,9 +1,9 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cartStatusState,
   cartState,
   cartDiscountedState,
-} from "./states/cartState";
+} from "../../states/cartState";
 import { emptyCart } from "domain/cart";
 import { useCallback } from "react";
 

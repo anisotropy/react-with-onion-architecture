@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import HomeContainer from "interaction/HomeContainer";
+import HomeContainer from "interaction/HomePage";
 
 const Home: NextPage = () => {
   return <HomeContainer />;

@@ -1,8 +1,8 @@
-import ShoppingContainer from "interaction/ShoppingContainer";
+import ShoppingPage from "interaction/ShoppingPage";
 import type { NextPage } from "next";
 
 const Shopping: NextPage = () => {
-  return <ShoppingContainer />;
+  return <ShoppingPage />;
 };
 
 export default Shopping;
