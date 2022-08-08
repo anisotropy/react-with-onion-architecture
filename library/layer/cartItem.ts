@@ -1,17 +1,58 @@
+import {
+  objectGet,
+  objectIn,
+  objectPick,
+  objectReduce,
+  objectSet,
+} from "./layer/common";
+
 export type CartItem = {
   id: number;
   name: string;
-  amount: number;
-  originalAmount?: number;
-  shipping: number;
+  isPrime: boolean;
+  image: string;
+  price: number;
   quantity: number;
+  totalPrice: number;
 };
 
-export type ExtendedCartitem = CartItem & {
+export type ExtendedCartItem = Omit<CartItem, "totalPrice"> & {
+  totalPrice?: number;
+} & {
   [key: string | number | symbol]: any;
 };
 
-export function makeCartItem(properties: ExtendedCartitem): CartItem {
-  const { id, name, amount, shipping, quantity, originalAmount } = properties;
-  return { id, name, amount, shipping, quantity, originalAmount };
+export function createCartItem(properties: ExtendedCartItem): CartItem {
+  const cartItem = objectPick(properties, [
+    "id",
+    "name",
+    "isPrime",
+    "image",
+    "price",
+    "quantity",
+    "totalPrice",
+  ]);
+
+  return objectIn(cartItem, "totalPrice")
+    ? (cartItem as CartItem)
+    : (objectSet(
+        cartItem,
+        "totalPrice",
+        objectGet(cartItem, "price") * objectGet(cartItem, "quantity")
+      ) as CartItem);
+}
+
+export function updateCartItem<K extends keyof CartItem>(
+  item: CartItem,
+  values: Partial<CartItem>
+) {
+  return objectReduce(
+    values,
+    (item, key, value) => objectSet(item, key, value as CartItem[K]),
+    item
+  );
+}
+
+export function readCartItem<K extends keyof CartItem>(item: CartItem, key: K) {
+  return objectGet(item, key);
 }

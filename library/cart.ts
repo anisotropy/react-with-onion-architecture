@@ -1,76 +1,107 @@
-import { CartItem, makeCartItem } from "./layer/cartItem";
-import { arrayFind, arrayRemove } from "./layer/layer/common";
-import { withObjectCopy } from "./layer/layer/layer/common";
+import {
+  CartItem,
+  createCartItem,
+  ExtendedCartItem,
+  readCartItem,
+  updateCartItem,
+} from "./layer/cartItem";
+import {
+  arrayFilter,
+  arrayFind,
+  arrayMap,
+  arrayPush,
+  arrayReduce,
+  arraySort,
+  objectGet,
+} from "./layer/layer/common";
 
-export { type CartItem };
+export { type CartItem, readCartItem, updateCartItem } from "./layer/cartItem";
 
-export type Cart = CartItem[];
+export type CartItems = CartItem[];
 
-type ItemToAdd = Omit<CartItem, "amount" | "quantity"> & { price: number };
+export const emptyCart: CartItems = [];
 
-export function addToCart(cart: Cart, itemToAdd: ItemToAdd) {
+export function addToCart(cartItems: CartItems, itemToAdd: ExtendedCartItem) {
   return arrayFind(
-    cart,
-    (item) => item.id === itemToAdd.id,
-    (itemCopy) => {
-      itemCopy.quantity += 1;
-      itemCopy.amount += itemToAdd.price;
-    },
-    (cartCopy) => {
-      const newItem = makeCartItem({
-        ...itemToAdd,
-        amount: itemToAdd.price,
-        quantity: 1,
+    cartItems,
+    (cartItem) => readCartItem(cartItem, "id") === objectGet(itemToAdd, "id"),
+    (cartItem) => {
+      const quantity = readCartItem(cartItem, "quantity") + 1;
+      const totalPrice = readCartItem(cartItem, "price") * quantity;
+      return updateCartItem(cartItem, {
+        quantity,
+        totalPrice,
       });
-      cartCopy.push(newItem);
+    },
+    (cartItems) => {
+      const price = objectGet(itemToAdd, "price");
+      const cartItem = updateCartItem(createCartItem(itemToAdd), {
+        quantity: 1,
+        totalPrice: price,
+      });
+      return arrayPush(cartItems, cartItem);
     }
   );
 }
 
-export function calcTotal(cart: Cart, field: keyof CartItem) {
-  return cart.reduce((total, item) => {
-    const value = item[field];
-    if (typeof value === "number") {
-      return total + value;
-    } else {
-      return total;
-    }
-  }, 0);
-}
-
-export function removeItem(cart: Cart, index: number) {
-  return arrayRemove(cart, index);
-}
-
-export function isInCart(cart: Cart, name: string) {
-  const item = cart.find((item) => item.name === name);
-  return Boolean(item);
-}
-
-export function isCartEmpty(cart: Cart) {
-  return cart.length === 0;
-}
-
-export function cartMap<T>(cart: Cart, callbcak: (item: CartItem) => T) {
-  return cart.map(callbcak);
-}
-
-export function emptyCart() {
-  return [];
-}
-
-export function copyCart(cart: Cart) {
-  return cart.map((item) => withObjectCopy(item, (itemCopy) => itemCopy));
-}
-
-export function cartFind(
-  cart: Cart,
-  name: string,
-  modify: (item: CartItem) => void
-) {
+export function subtractFromCart(cartItems: CartItems, id: number) {
   return arrayFind(
-    cart,
-    (item) => item.name === name,
-    (item) => modify(item)
+    cartItems,
+    (cartItem) => {
+      return (
+        readCartItem(cartItem, "id") === id &&
+        readCartItem(cartItem, "quantity") > 1
+      );
+    },
+    (cartItem) => {
+      const quantity = readCartItem(cartItem, "quantity") - 1;
+      const totalPrice = readCartItem(cartItem, "price") * quantity;
+      return updateCartItem(cartItem, {
+        quantity,
+        totalPrice,
+      });
+    },
+    (cartItems) => {
+      return arrayFilter(
+        cartItems,
+        (cartItem) => readCartItem(cartItem, "id") !== id
+      );
+    }
   );
+}
+
+export function removeFromCart(cartItems: CartItems, id: number) {
+  return arrayFilter(cartItems, (item) => readCartItem(item, "id") !== id);
+}
+
+export function mapCartItems<T>(
+  items: CartItems,
+  modify: (item: CartItem) => T
+) {
+  return arrayMap(items, modify);
+}
+
+export function countCartItems(items: CartItems) {
+  return items.length;
+}
+
+export function calcPrice(
+  items: CartItems,
+  predicate: (item: CartItem) => boolean
+) {
+  return arrayReduce(
+    items,
+    (totalPrice, item) =>
+      predicate(item)
+        ? totalPrice + readCartItem(item, "totalPrice")
+        : totalPrice,
+    0
+  );
+}
+
+export function sortCartItems(
+  items: CartItems,
+  compare?: (itemA: CartItem, itemB: CartItem) => number
+) {
+  return arraySort(items, compare);
 }
