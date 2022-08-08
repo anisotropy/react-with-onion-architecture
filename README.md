@@ -33,13 +33,15 @@ function map(array, f) {
 
 `reduce`의 인자로 들어가는 익명 함수는 외부 데이터인 `ret`을 변형시키기 때문에 액션입니다. 하지만 저자는 "변이가 지역적으로 일어나기 때문에 여전히 계산이라는 규칙을 유지합니다.”(314)라고 말합니다. 액션이 포함된 코드라도 변이가 지역적으로만 일어난다면 그 코드는 계산이라고 볼 수 있는 것입니다. `useState`가 포함된 코드를 작성할 때, 우리는 위의 코드에서 익명함수 내부의 코드를 작성하는 것과 유사하다고 볼 수 있고, 변이가 외부로 전파되지만 않는다면, 우리는 액션을 작성했다고 말할 수 없습니다. 따라서 Context API나 `Recoil` 등의 전역 상태 관리자만 사용하지 않는다면, `useState` 등의 hook을 사용하더라도 그 컴포넌트는 계산이라고 말할 수 있습니다.
 
-## 계층
+## 인터랙션
+
+그래서 아래의 다이어그램과 같이 인터랙션 계층에 액션 뿐만 아니라 계산도 포함될 수 있을 것입니다. Hook은 전역 상태가 사용하거나 외부 API를 사용하는 액션과 그렇지 않은 계산으로 나뉠 수 있고, 액션인 Hook을 사용하는 컴포넌트가 액션, 계산인 Hook을 사용하는 컴포넌트는 계산으로 간주할 수 있습니다.
 
 ```mermaid
 flowchart TD
 	subgraph Interaction
-		CA["Components (action)"] --> S[States]
-		CA --> HA["Hooks (action)"]
+		CA["Components (action)"]
+		CA --> HA["Hooks (action)"] --> S[States]
 		CA --> CC["Components (calculation)"] --> HC["Hooks (calulation)"]
 	end
 	Interaction --> D[Domain]
@@ -50,24 +52,32 @@ flowchart TD
 
 ```
 ├─ interaction
-│ ├─ functions
-│ │  └─ layer
-│ │     └─ ...
-│ └─ components
-│    └─ layer
-│       └─ ...
+│  └─ layer
+│     └─ ...
+│        ├─ hooks
+│        │  └─ layer
+│        │     └─ ...
+│        │        └─ states
+│        │
+│        └─ components
+│           └─ layer
+│              └─ ...
+│                 └─ hooks
+│                    └─ layer
+│	  					          └─ ...
+│
 ├─ domain
 │  └─ layer
 │     └─ ...
+│
 └─ library
    └─ layer
       └─ layer
          └─ ...
-
 ```
 
 `library`, `domain`, `interaction`은 각각 어니언 아키첵처에서의 언어 계층, 도메인 계층, 인터랙션 계층에 해당하는 디렉토리입니다. 언어 계층, 도메인 계층, 인터랙션 계층은 디렉토리 상으로는 같은 계층에 속해 있지만, `interaction`이 가장 상위의 계층으로 `library`가 가장 하위의 계층으로 이해해야 합니다. `library`, `domain`, `interaction` 각 디렉토리의 내부에서는, 계층의 위계 구조가 명확히 드러나도록, 개념상의 계층과 디렉토리 구소 상의 계층이 일치하도록 서브 디렉토리를 만들어 하위 계층을 구현했습니다. (그리고 네이밍의 어려움을 피하기 위해 특별한 경우가 아니라면, 그 서브 디렉토리 이름을 `layer`로 정했습니다.)
 
 따라서 언어 계층의 인터페이스에 속하는 함수들은 `library` 디렉토리에 있는 파일에 작성된 함수들을 의미하게 되고, 도메인 계층의 인터페이스는 `domain`의 서브 디렉토리가 아닌 곳에서 작성된 함수들을 의미하게 됩니다.
 
-`components`는 리액트 컴포넌트 중 프리젠터가 계층 별로 정의되어 있는 디렉토리이고, `functions`는 `components`와 리액트 훅을 포함한 ‘액션’이 정의되어 있는 디렉토리입니다. 프리젠트는 ‘계산’으로 볼 수 있기 때문에 `function`의 서브 디렉토리에 포함되어야 한다고 잘못 생각할 수 있지만, 훅 등의 액션이 프리젠터를 호출하지 않기 때문에, 하위 계층으로 볼 수는 없습니다.
+`components`에는 리액트 컴포넌트 중 전역 상태나 외부 API를 사용하지 않은 컴포넌트가 정의되어 있습니다. 따라서 그 하위의 `hooks`에도 전역 상태나 외부 API 접근에 대한 hook이 포함되어서는 안됩니다. 전역 상태가 정의되어 있는 곳은 `states`으로 그 상위의 디렉토리에 정의된 hook들은 전역 상태에 관한 것이거나 외부 API를 사용하는 hook입니다.
