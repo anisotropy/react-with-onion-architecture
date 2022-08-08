@@ -6,92 +6,80 @@ import {
   updateCartItem,
 } from "./layer/cartItem";
 import {
-  arrayFilter,
-  arrayFind,
-  arrayMap,
-  arrayPush,
-  arrayReduce,
   arraySort,
+  objectAppend,
+  objectFilter,
   objectGet,
+  objectIn,
+  objectLength,
+  objectMap,
+  objectReduce,
+  objectSet,
 } from "./layer/layer/common";
 
 export { type CartItem, readCartItem, updateCartItem } from "./layer/cartItem";
 
-export type CartItems = CartItem[];
+export type CartItems = { [id: number]: CartItem };
 
-export const emptyCart: CartItems = [];
+export const emptyCart: CartItems = {};
 
-export function addToCart(cartItems: CartItems, itemToAdd: ExtendedCartItem) {
-  return arrayFind(
-    cartItems,
-    (cartItem) => readCartItem(cartItem, "id") === objectGet(itemToAdd, "id"),
-    (cartItem) => {
-      const quantity = readCartItem(cartItem, "quantity") + 1;
-      const totalPrice = readCartItem(cartItem, "price") * quantity;
-      return updateCartItem(cartItem, {
-        quantity,
-        totalPrice,
-      });
-    },
-    (cartItems) => {
-      const price = objectGet(itemToAdd, "price");
-      const cartItem = updateCartItem(createCartItem(itemToAdd), {
-        quantity: 1,
-        totalPrice: price,
-      });
-      return arrayPush(cartItems, cartItem);
-    }
-  );
+export function addToCart(items: CartItems, itemToAdd: ExtendedCartItem) {
+  const id = objectGet(itemToAdd, "id");
+  if (objectIn(items, id)) {
+    const item = objectGet(items, id);
+    const quantity = readCartItem(item, "quantity") + 1;
+    const totalPrice = readCartItem(item, "price") * quantity;
+    return objectSet(items, id, updateCartItem(item, { quantity, totalPrice }));
+  } else {
+    const newItem = updateCartItem(createCartItem(itemToAdd), {
+      quantity: 1,
+      totalPrice: objectGet(itemToAdd, "price"),
+    });
+    return objectAppend(items, id, newItem);
+  }
 }
 
-export function subtractFromCart(cartItems: CartItems, id: number) {
-  return arrayFind(
-    cartItems,
-    (cartItem) => {
-      return (
-        readCartItem(cartItem, "id") === id &&
-        readCartItem(cartItem, "quantity") > 1
-      );
-    },
-    (cartItem) => {
-      const quantity = readCartItem(cartItem, "quantity") - 1;
-      const totalPrice = readCartItem(cartItem, "price") * quantity;
-      return updateCartItem(cartItem, {
-        quantity,
-        totalPrice,
-      });
-    },
-    (cartItems) => {
-      return arrayFilter(
-        cartItems,
-        (cartItem) => readCartItem(cartItem, "id") !== id
-      );
-    }
-  );
+export function subtractFromCart(items: CartItems, id: number) {
+  if (!objectIn(items, id)) return items;
+
+  const item = objectGet(items, id);
+  const quantity = readCartItem(item, "quantity") - 1;
+
+  if (quantity > 0) {
+    const updatedItem = updateCartItem(item, {
+      quantity,
+      totalPrice: readCartItem(item, "price") * quantity,
+    });
+    return objectSet(items, id, updatedItem);
+  } else if (quantity == 0) {
+    return objectFilter(items, (itemId, item) => itemId !== id);
+  } else {
+    return items;
+  }
 }
 
-export function removeFromCart(cartItems: CartItems, id: number) {
-  return arrayFilter(cartItems, (item) => readCartItem(item, "id") !== id);
+export function removeFromCart(items: CartItems, id: number) {
+  return objectFilter(items, (itemId, item) => itemId !== id);
 }
 
 export function mapCartItems<T>(
   items: CartItems,
   modify: (item: CartItem) => T
 ) {
-  return arrayMap(items, modify);
+  return objectMap(items, (id, item) => modify(item));
 }
 
 export function countCartItems(items: CartItems) {
-  return items.length;
+  return objectLength(items);
 }
 
 export function calcPrice(
   items: CartItems,
   predicate: (item: CartItem) => boolean
 ) {
-  return arrayReduce(
+  return objectReduce(
     items,
-    (totalPrice, item) =>
+    (totalPrice, id, item) =>
       predicate(item)
         ? totalPrice + readCartItem(item, "totalPrice")
         : totalPrice,
@@ -103,5 +91,6 @@ export function sortCartItems(
   items: CartItems,
   compare?: (itemA: CartItem, itemB: CartItem) => number
 ) {
-  return arraySort(items, compare);
+  const arrayItems = objectMap(items, (id, item) => item);
+  return arraySort(arrayItems, compare);
 }

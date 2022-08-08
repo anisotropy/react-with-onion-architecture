@@ -5,7 +5,9 @@ export function objectSet<T, K extends keyof T>(
   key: K,
   value: T[K]
 ) {
-  return withObjectCopy(object, (copy) => (copy[key] = value));
+  return withObjectCopy(object, (copy) => {
+    if (key in copy) copy[key] = value;
+  });
 }
 
 export function objectSetValues<T, K extends keyof T>(
@@ -16,6 +18,16 @@ export function objectSetValues<T, K extends keyof T>(
     (Object.keys(values) as K[]).forEach((key) => {
       if (key in copy) copy[key] = values[key] as T[K];
     });
+  });
+}
+
+export function objectAppend<K extends number | string | symbol, V>(
+  object: Record<K, V>,
+  key: K,
+  value: V
+) {
+  return withObjectCopy(object, (copy) => {
+    if (!(key in copy)) copy[key] = value;
   });
 }
 
@@ -64,6 +76,10 @@ export function objectMap<T, K extends keyof T, R>(
   modify: (key: K, value: T[K]) => R
 ) {
   return Object.entries(object).map(([key, value]) => modify(key as K, value));
+}
+
+export function objectLength<T>(object: T) {
+  return Object.keys(object).length;
 }
 
 export function arrayFilter<T>(array: T[], predicate: (value: T) => boolean) {
@@ -132,6 +148,10 @@ export function arraySort<T>(array: T[], compare?: (a: T, b: T) => number) {
   return withArrayCopy(array, (copy) => {
     copy.sort(compare);
   });
+}
+
+export function arrayLength<T>(array: T[]) {
+  return array.length;
 }
 
 export function chain<T>(value: T, ...funcs: ((value: T) => T)[]) {
