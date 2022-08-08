@@ -24,10 +24,10 @@ JSX는 javascript 객체이기 때문에 데이터라고 볼 수 있습니다. (
 
 ```javascript
 function map(array, f) {
-	return reduce(array , [], function(ret, item) {
-		ret.push(f(item));
-		return ret :
-	}
+  return reduce(array , [], function(ret, item) {
+    ret.push(f(item));
+    return ret :
+ }
 }
 ```
 
@@ -64,7 +64,7 @@ flowchart TD
 │              └─ ...
 │                 └─ hooks
 │                    └─ layer
-│	  					          └─ ...
+│                       └─ ...
 │
 ├─ domain
 │  └─ layer
