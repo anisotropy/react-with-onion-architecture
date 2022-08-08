@@ -27,7 +27,7 @@ function map(array, f) {
   return reduce(array , [], function(ret, item) {
     ret.push(f(item));
     return ret :
- }
+  }
 }
 ```
 
