@@ -3,11 +3,11 @@ import Button from "./layer/Button";
 
 type ShoppingItemProps = {
   item: Item;
-  onAdd: (id: number) => void;
+  onAddToCart: (id: number) => void;
 };
 
-export default function ShoppingItem({ item, onAdd }: ShoppingItemProps) {
-  const onClickAdd = () => onAdd(item.id);
+export default function ShoppingItem({ item, onAddToCart }: ShoppingItemProps) {
+  const onClickAdd = () => onAddToCart(readShoppingItem(item, "id"));
   return (
     <>
       <div className="shoppingitem">

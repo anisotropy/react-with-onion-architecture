@@ -12,20 +12,21 @@ type Item = {
   price: number;
 };
 
-export function useShoppingItems() {
+export default function useShoppingItems() {
   const { data, error } = useSWR<AxiosResponse<Item[]>>(
     "/api/items",
     axios.get
   );
-  const [shoppingItems, setShoppingItems] = useRecoilState(shoppingState);
+  const [items, setItems] = useRecoilState(shoppingState);
 
   useEffect(() => {
     if (!data) return;
-    setShoppingItems((items) => addShoppingItem(items, ...data.data));
-  }, [data, setShoppingItems]);
+    setItems((items) => addShoppingItem(items, ...data.data));
+  }, [data, setItems]);
 
   return {
-    shoppingItems,
+    items,
+    setItems,
     isLoading: !data && !error,
     isError: Boolean(error),
   };

@@ -7,17 +7,17 @@ import ShoppingItem from "./layer/ShoppingItem";
 
 type ShoppingListProps = {
   items: ShoppingItems;
-  onAdd: (id: number) => void;
+  onAddToCart: (id: number) => void;
 };
 
-export function ShoppingList({ items, onAdd }: ShoppingListProps) {
+export function ShoppingList({ items, onAddToCart }: ShoppingListProps) {
   return (
     <div className="shoppingList">
       {mapShoppingItems(items, (item) => (
         <ShoppingItem
           key={readShoppingItem(item, "id")}
           item={item}
-          onAdd={() => {}}
+          onAddToCart={onAddToCart}
         />
       ))}
       <style jsx>{`
