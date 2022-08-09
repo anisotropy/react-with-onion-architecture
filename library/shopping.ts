@@ -7,6 +7,7 @@ import {
   objectSet,
   objectMap,
   objectReduce,
+  objectAppend,
 } from "./layer/layer/common";
 import {
   createShoppingItem,
@@ -23,8 +24,6 @@ export {
   readShoppingItemValues,
   updateShoppingItem,
 } from "./layer/shoppingItem";
-
-export { arraySort } from "./layer/layer/common";
 
 export type ShoppingItems = { [id: number]: ShoppingItem };
 
@@ -47,7 +46,7 @@ export function addShoppingItem(
       const id = objectGet(itemToAdd, "id");
       return objectIn(items, id)
         ? items
-        : objectSet(items, id, createShoppingItem(itemToAdd));
+        : objectAppend(items, id, createShoppingItem(itemToAdd));
     },
     items
   );
