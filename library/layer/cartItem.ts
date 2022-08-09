@@ -9,8 +9,7 @@ import {
 export type CartItem = {
   id: number;
   name: string;
-  isPrime: boolean;
-  image: string;
+  type: string;
   price: number;
   quantity: number;
   totalPrice: number;
@@ -26,8 +25,7 @@ export function createCartItem(properties: ExtendedCartItem): CartItem {
   const cartItem = objectPick(properties, [
     "id",
     "name",
-    "isPrime",
-    "image",
+    "type",
     "price",
     "quantity",
     "totalPrice",

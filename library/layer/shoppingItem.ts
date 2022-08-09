@@ -3,7 +3,6 @@ import {
   objectGet,
   objectIn,
   objectPick,
-  objectReduce,
   objectSet,
   objectSetValues,
 } from "./layer/common";
@@ -11,10 +10,8 @@ import {
 export type ShoppingItem = {
   id: number;
   name: string;
-  image: string;
-  stock: number;
+  type: string;
   price: number;
-  isPrime: boolean;
   quantity: number;
 };
 
@@ -28,10 +25,8 @@ export function createShoppingItem(item: ExtendedShoppingItem): ShoppingItem {
   const shoppingItem = objectPick(item, [
     "id",
     "name",
-    "image",
-    "stock",
+    "type",
     "price",
-    "isPrime",
     "quantity",
   ]);
 
