@@ -66,7 +66,7 @@ export function mapCartItems<T>(
   items: CartItems,
   modify: (item: CartItem) => T
 ) {
-  return objectMap(items, (id, item) => modify(item));
+  return objectMap(items, (item) => modify(item));
 }
 
 export function countCartItems(items: CartItems) {
@@ -79,7 +79,7 @@ export function calcPrice(
 ) {
   return objectReduce(
     items,
-    (totalPrice, id, item) =>
+    (totalPrice, item) =>
       predicate(item)
         ? totalPrice + readCartItem(item, "totalPrice")
         : totalPrice,
@@ -91,6 +91,6 @@ export function sortCartItems(
   items: CartItems,
   compare?: (itemA: CartItem, itemB: CartItem) => number
 ) {
-  const arrayItems = objectMap(items, (id, item) => item);
+  const arrayItems = objectMap(items, (item) => item);
   return arraySort(arrayItems, compare);
 }

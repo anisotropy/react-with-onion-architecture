@@ -33,7 +33,7 @@ export function filterShoppingItems(
   items: ShoppingItems,
   predicate: (item: ShoppingItem) => boolean
 ) {
-  return objectFilter(items, (id, item) => predicate(item));
+  return objectFilter(items, (item) => predicate(item));
 }
 
 export function addShoppingItem(
@@ -56,7 +56,7 @@ export function mapShoppingItems<T>(
   items: ShoppingItems,
   modify: (item: ShoppingItem) => T
 ) {
-  return objectMap(items, (id, item) => modify(item));
+  return objectMap(items, (item) => modify(item));
 }
 
 export function getShoppingItem(items: ShoppingItems, id: number) {
@@ -88,7 +88,8 @@ export function decreaseShoppingItem(items: ShoppingItems, id: number) {
 export function initShoppingItem(items: ShoppingItems, id: number) {
   return objectReduce(
     items,
-    (result, id, item) => {
+    (result, item) => {
+      const id = readShoppingItem(item, "id");
       result[id] = updateShoppingItem(item, { quantity: 0 });
       return result;
     },
@@ -100,6 +101,6 @@ export function sortShoppingItems(
   items: ShoppingItems,
   compare?: (itemA: ShoppingItem, itemB: ShoppingItem) => number
 ) {
-  const itemArray = objectMap(items, (id, item) => item);
+  const itemArray = objectMap(items, (item) => item);
   return arraySort(itemArray, compare);
 }

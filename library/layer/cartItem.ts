@@ -4,6 +4,7 @@ import {
   objectPick,
   objectReduce,
   objectSet,
+  objectSetValues,
 } from "./layer/common";
 
 export type CartItem = {
@@ -44,11 +45,7 @@ export function updateCartItem<K extends keyof CartItem>(
   item: CartItem,
   values: Partial<CartItem>
 ) {
-  return objectReduce(
-    values,
-    (item, key, value) => objectSet(item, key, value as CartItem[K]),
-    item
-  );
+  return objectSetValues(item, values);
 }
 
 export function readCartItem<K extends keyof CartItem>(item: CartItem, key: K) {

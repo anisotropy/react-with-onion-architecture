@@ -53,11 +53,11 @@ export function objectPick<T, K extends keyof T>(
 
 export function objectReduce<T, R, K extends keyof T>(
   object: T,
-  func: (result: R, key: K, value: T[K]) => R,
+  func: (result: R, value: T[K]) => R,
   initial: R
 ) {
   return Object.entries(object).reduce((result, [key, value]) => {
-    return func(result, key as K, value);
+    return func(result, value);
   }, initial);
 }
 
@@ -74,9 +74,11 @@ export function objectFilter<K extends number | string | symbol, V>(
 
 export function objectMap<T, K extends keyof T, R>(
   object: T,
-  modify: (key: K, value: T[K]) => R
+  modify: (value: T[K]) => R
 ) {
-  return Object.entries(object).map(([key, value]) => modify(key as K, value));
+  return (Object.keys(object) as K[]).map((key) => {
+    return modify(object[key]);
+  });
 }
 
 export function objectLength<T>(object: T) {
