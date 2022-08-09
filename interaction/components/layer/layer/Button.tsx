@@ -6,9 +6,11 @@ type ButtonProps = {
 export default function Button({ children, onClick }: ButtonProps) {
   return (
     <>
-      <button onClick={onClick}>{children}</button>
+      <button className="button" onClick={onClick}>
+        {children}
+      </button>
       <style jsx>{`
-        button {
+        .button {
           padding: 0.5rem;
           background: #333;
           color: white;

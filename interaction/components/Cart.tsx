@@ -4,9 +4,10 @@ import CartItem from "./layer/CartItem";
 
 type CartProps = {
   items: CartItems;
+  onRemoveFromCart: (id: number) => void;
 };
 
-export default function Cart({ items }: CartProps) {
+export default function Cart({ items, onRemoveFromCart }: CartProps) {
   if (countCartItems(items) === 0) {
     return <p>No items</p>;
   }
@@ -15,7 +16,11 @@ export default function Cart({ items }: CartProps) {
     <>
       <div className="cartItems">
         {mapCartItems(items, (item) => (
-          <CartItem key={readCartItem(item, "id")} item={item} />
+          <CartItem
+            key={readCartItem(item, "id")}
+            item={item}
+            onRemoveFromCart={onRemoveFromCart}
+          />
         ))}
       </div>
       <style jsx>{`

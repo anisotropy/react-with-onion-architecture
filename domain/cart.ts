@@ -5,4 +5,5 @@ export {
   addToCart,
   countCartItems,
   readCartItem,
+  subtractFromCart,
 } from "library/cart";

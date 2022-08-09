@@ -51,15 +51,15 @@ export function subtractFromCart(items: CartItems, id: number) {
       totalPrice: readCartItem(item, "price") * quantity,
     });
     return objectSet(items, id, updatedItem);
-  } else if (quantity == 0) {
-    return objectFilter(items, (itemId, item) => itemId !== id);
+  } else if (quantity === 0) {
+    return objectFilter(items, (item) => readCartItem(item, "id") !== id);
   } else {
     return items;
   }
 }
 
 export function removeFromCart(items: CartItems, id: number) {
-  return objectFilter(items, (itemId, item) => itemId !== id);
+  return objectFilter(items, (item) => readCartItem(item, "id") !== id);
 }
 
 export function mapCartItems<T>(

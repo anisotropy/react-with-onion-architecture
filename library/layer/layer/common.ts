@@ -63,10 +63,11 @@ export function objectReduce<T, R, K extends keyof T>(
 
 export function objectFilter<K extends number | string | symbol, V>(
   object: Record<K, V>,
-  predicate: (key: K, value: V) => boolean
+  predicate: (value: V) => boolean
 ) {
-  return Object.entries(object).reduce((result, [key, value]) => {
-    if (predicate(key as K, value as V)) result[key as K] = value as V;
+  return (Object.keys(object) as K[]).reduce((result, key) => {
+    const value = object[key];
+    if (predicate(value)) result[key] = value;
     return result;
   }, {} as Record<K, V>);
 }
