@@ -1,12 +1,17 @@
 import React from "react";
 
-type ShoppingLayoutProps = { list: React.ReactNode };
+type ShoppingLayoutProps = { filter: React.ReactNode; list: React.ReactNode };
 
-export default function ShoppingLayout({ list }: ShoppingLayoutProps) {
+export default function ShoppingLayout({ filter, list }: ShoppingLayoutProps) {
   return (
     <div className="shoppingLayout">
-      {list}
-      <style jsx>{``}</style>
+      <div className="wrapper">{filter}</div>
+      <div className="wrapper">{list}</div>
+      <style jsx>{`
+        .wrapper + .wrapper {
+          margin-top: 1rem;
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { addToCart } from "domain/cart";
+import { FilterBy, filterShoppingItemsBy } from "domain/shopping";
 import { getShoppingItem, increateShoppingItem } from "library/shopping";
+import Filter from "./components/Filter";
 import ShoppingLayout from "./components/ShoppingLayout";
 import { ShoppingList } from "./components/ShoppingList";
 import useCart from "./hooks/useCart";
@@ -18,8 +20,13 @@ export default function ShoppingPage() {
     cart.setItems((items) => addToCart(items, item));
   };
 
+  const onFilter = (by: FilterBy) => {
+    shopping.setFilterBy(by);
+  };
+
   return (
     <ShoppingLayout
+      filter={<Filter by={shopping.filterBy} onFilter={onFilter} />}
       list={<ShoppingList items={shopping.items} onAddToCart={onAddToCart} />}
     />
   );

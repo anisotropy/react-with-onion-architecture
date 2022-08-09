@@ -1,9 +1,14 @@
 import axios, { AxiosResponse } from "axios";
-import { addShoppingItem } from "domain/shopping";
-import { useEffect } from "react";
+import {
+  addShoppingItem,
+  FilterBy,
+  filterShoppingItemsBy,
+} from "domain/shopping";
+import { objectSet } from "domain/common";
+import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import useSWR from "swr";
-import { shoppingState } from "./states/shopping";
+import { shoppingState, shoppingStatus } from "./states/shopping";
 
 type Item = {
   id: number;
@@ -18,15 +23,28 @@ export default function useShoppingItems() {
     axios.get
   );
   const [items, setItems] = useRecoilState(shoppingState);
+  const [status, setStatus] = useRecoilState(shoppingStatus);
+  const { filterBy } = status;
 
   useEffect(() => {
     if (!data) return;
     setItems((items) => addShoppingItem(items, ...data.data));
   }, [data, setItems]);
 
+  const setFilterBy = (by: FilterBy) => {
+    setStatus((prevStatus) => objectSet(prevStatus, "filterBy", by));
+  };
+
+  const displayedItems = useMemo(
+    () => filterShoppingItemsBy(items, filterBy),
+    [items, filterBy]
+  );
+
   return {
-    items,
+    items: displayedItems,
     setItems,
+    filterBy,
+    setFilterBy,
     isLoading: !data && !error,
     isError: Boolean(error),
   };

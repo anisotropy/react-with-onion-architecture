@@ -1,9 +1,18 @@
 type ButtonProps = {
   children: React.ReactNode;
-  onClick: () => void;
+  border?: boolean;
+  round?: boolean;
+  text?: boolean;
+  onClick?: () => void;
 };
 
-export default function Button({ children, onClick }: ButtonProps) {
+export default function Button({
+  children,
+  border,
+  round,
+  text,
+  onClick,
+}: ButtonProps) {
   return (
     <>
       <button className="button" onClick={onClick}>
@@ -12,9 +21,10 @@ export default function Button({ children, onClick }: ButtonProps) {
       <style jsx>{`
         .button {
           padding: 0.5rem;
-          background: #333;
-          color: white;
-          border: 0;
+          background: ${border || text ? "transparent" : "#333"};
+          color: ${border || text ? "inherit" : "white"};
+          border: 1px solid ${text ? "transparent" : border ? "#aaa" : "#333"};
+          border-radius: ${round ? "0.5rem" : 0};
           cursor: pointer;
           font-size: 1rem;
         }
