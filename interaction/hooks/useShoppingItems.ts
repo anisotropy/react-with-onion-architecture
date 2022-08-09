@@ -1,14 +1,31 @@
 import axios, { AxiosResponse } from "axios";
-import { ShoppingItems } from "library/shopping";
+import { addShoppingItem } from "domain/shopping";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import useSWR from "swr";
+import { shoppingState } from "./states/shopping";
 
-type Data = { items: ShoppingItems };
+type Item = {
+  id: number;
+  name: string;
+  type: string;
+  price: number;
+};
 
 export function useShoppingItems() {
-  const { data, error } = useSWR<AxiosResponse<Data>>("/api/items", axios.get);
+  const { data, error } = useSWR<AxiosResponse<Item[]>>(
+    "/api/items",
+    axios.get
+  );
+  const [shoppingItems, setShoppingItems] = useRecoilState(shoppingState);
+
+  useEffect(() => {
+    if (!data) return;
+    setShoppingItems((items) => addShoppingItem(items, ...data.data));
+  }, [data, setShoppingItems]);
 
   return {
-    shoppingItems: data?.data.items,
+    shoppingItems,
     isLoading: !data && !error,
     isError: Boolean(error),
   };

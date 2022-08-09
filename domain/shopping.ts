@@ -1,1 +1,6 @@
-export { type ShoppingItems, type ShoppingItem } from "library/shopping";
+export {
+  type ShoppingItems,
+  type ShoppingItem,
+  addShoppingItem,
+  emptyShoppingItems,
+} from "library/shopping";
