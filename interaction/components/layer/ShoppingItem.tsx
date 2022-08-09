@@ -15,7 +15,7 @@ export default function ShoppingItem({ item, onAddToCart }: ShoppingItemProps) {
         <div>{readShoppingItem(item, "type")}</div>
         <div>Price: {readShoppingItem(item, "price")}</div>
         <div>Qunatity: {readShoppingItem(item, "quantity")}</div>
-        <Button text="Add to cart" onClick={onClickAdd} />
+        <Button onClick={onClickAdd}>Add to Cart</Button>
       </div>
       <style jsx>{`
         .shoppingitem {
