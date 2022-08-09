@@ -1,1 +1,6 @@
-export { type CartItems, type CartItem } from "library/cart";
+export {
+  type CartItems,
+  type CartItem,
+  emptyCart,
+  addToCart,
+} from "library/cart";
