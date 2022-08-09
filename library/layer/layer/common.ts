@@ -6,7 +6,7 @@ export function objectSet<T, K extends keyof T>(
   value: T[K]
 ) {
   return withObjectCopy(object, (copy) => {
-    if (key in copy) copy[key] = value;
+    copy[key] = value;
   });
 }
 
@@ -16,7 +16,7 @@ export function objectSetValues<T, K extends keyof T>(
 ) {
   return withObjectCopy(object, (copy) => {
     (Object.keys(values) as K[]).forEach((key) => {
-      if (key in copy) copy[key] = values[key] as T[K];
+      copy[key] = values[key] as T[K];
     });
   });
 }

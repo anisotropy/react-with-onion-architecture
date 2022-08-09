@@ -1,4 +1,5 @@
-import { mapShoppingItems, readShoppingItem } from "domain/shopping";
+import ShoppingLayout from "./components/ShoppingLayout";
+import { ShoppingList } from "./components/ShoppingList";
 import { useShoppingItems } from "./hooks/useShoppingItems";
 
 export default function ShoppingPage() {
@@ -8,12 +9,8 @@ export default function ShoppingPage() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div>
-      {mapShoppingItems(shoppingItems, (item) => (
-        <div key={readShoppingItem(item, "id")}>
-          {readShoppingItem(item, "name")}
-        </div>
-      ))}
-    </div>
+    <ShoppingLayout
+      list={<ShoppingList items={shoppingItems} onAdd={() => {}} />}
+    />
   );
 }
