@@ -16,6 +16,7 @@ export default function Button({ children, onClick }: ButtonProps) {
           color: white;
           border: 0;
           cursor: pointer;
+          font-size: 1rem;
         }
       `}</style>
     </>
