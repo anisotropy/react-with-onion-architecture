@@ -1,7 +1,7 @@
 type CartLayoutProps = {
-  children: React.ReactNode;
+  list: React.ReactNode;
 };
 
-export default function CartLayout({ children }: CartLayoutProps) {
-  return <div>{children}</div>;
+export default function CartLayout({ list }: CartLayoutProps) {
+  return <div>{list}</div>;
 }

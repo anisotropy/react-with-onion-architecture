@@ -1,53 +1,28 @@
-import {
-  Cart as CartItems,
-  cartMap,
-  CartStatus,
-  isCartEmpty,
-} from "domain/cart";
+import { CartItems, countCartItems } from "domain/cart";
+import { mapCartItems, readCartItem } from "library/cart";
 import CartItem from "./layer/CartItem";
-import Button from "./layer/layer/Button";
 
 type CartProps = {
   items: CartItems;
-  status: CartStatus;
-  onPurchase: () => void;
 };
 
-export default function Cart({ items, status, onPurchase }: CartProps) {
-  if (isCartEmpty(items)) {
+export default function Cart({ items }: CartProps) {
+  if (countCartItems(items) === 0) {
     return <p>No items</p>;
   }
 
   return (
-    <div className="wrapper">
-      <div className="cartitems">
-        {cartMap(items, (item) => (
-          <CartItem key={item.id} item={item} />
+    <>
+      <div className="cartItems">
+        {mapCartItems(items, (item) => (
+          <CartItem key={readCartItem(item, "id")} item={item} />
         ))}
       </div>
-      <div>
-        <div>total amount: {status.totalAmount}</div>
-        <div>
-          total shipping:{" "}
-          <span className="shipping">{status.totalShipping}</span>{" "}
-          {status.isFreeShipping && 0}
-        </div>
-        <div>tax: {status.tax}</div>
-      </div>
-      <div>
-        <Button text="Purchase" onClick={onPurchase} />
-      </div>
       <style jsx>{`
-        .wrapper > * {
+        .cartItems > :global(*) + :global(*) {
           margin-top: 1rem;
-        }
-        .cartitems > :global(*) {
-          margin-top: 1rem;
-        }
-        .shipping {
-          text-decoration: ${status.isFreeShipping ? "line-through" : "none"};
         }
       `}</style>
-    </div>
+    </>
   );
 }

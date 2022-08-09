@@ -3,4 +3,6 @@ export {
   type CartItem,
   emptyCart,
   addToCart,
+  countCartItems,
+  readCartItem,
 } from "library/cart";
