@@ -3,54 +3,29 @@ import type { NextApiRequest, NextApiResponse } from "next";
 type Item = {
   id: number;
   name: string;
+  type: string;
   price: number;
-  shipping: number;
 };
 
-type Items = {
-  [id: number]: Item;
-};
+type Items = Item[];
 
-type Data = { items: Items };
-
-export default function items(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const items = {
-    1: {
-      id: 1,
-      name: "egg",
-      price: 3000,
-      shipping: 2000,
-    },
-    2: {
-      id: 2,
-      name: "watch",
-      price: 20000,
-      shipping: 2000,
-    },
-    3: {
-      id: 3,
-      name: "shoes",
-      price: 50000,
-      shipping: 3000,
-    },
-    4: {
-      id: 4,
-      name: "socks",
-      price: 5000,
-      shipping: 3000,
-    },
-    5: {
-      id: 5,
-      name: "t-shirt",
-      price: 30000,
-      shipping: 2000,
-    },
-    6: {
-      id: 6,
-      name: "hat",
-      price: 20000,
-      shipping: 3000,
-    },
-  };
-  res.status(200).json({ items });
+export default function items(
+  req: NextApiRequest,
+  res: NextApiResponse<Items>
+) {
+  const items = [
+    { id: 1, name: "banana", type: "fruit", price: 20900 },
+    { id: 2, name: "apple", type: "fruit", price: 44500 },
+    { id: 3, name: "grape", type: "fruit", price: 49900 },
+    { id: 4, name: "watermelon", type: "fruit", price: 42190 },
+    { id: 5, name: "lettuce", type: "vegetable", price: 16900 },
+    { id: 6, name: "onion", type: "vegetable", price: 12900 },
+    { id: 7, name: "cucumber", type: "vegetable", price: 17900 },
+    { id: 8, name: "spinach", type: "vegetable", price: 2950 },
+    { id: 9, name: "pork", type: "meat", price: 7800 },
+    { id: 10, name: "beef", type: "meat", price: 99000 },
+    { id: 11, name: "chicken", type: "meat", price: 9200 },
+    { id: 12, name: "duck", type: "meat", price: 9600 },
+  ];
+  res.status(200).json(items);
 }
