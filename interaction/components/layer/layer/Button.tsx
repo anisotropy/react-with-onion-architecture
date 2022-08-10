@@ -23,7 +23,7 @@ export default function Button({
           padding: 0.5rem;
           background: ${border || text ? "transparent" : "#333"};
           color: ${border || text ? "inherit" : "white"};
-          border: 1px solid ${text ? "transparent" : border ? "#aaa" : "#333"};
+          border: 1px solid ${text ? "transparent" : "#333"};
           border-radius: ${round ? "0.5rem" : 0};
           cursor: pointer;
           font-size: 1rem;

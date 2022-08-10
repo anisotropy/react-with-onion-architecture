@@ -24,7 +24,7 @@ export default function CartItem({ item, onRemoveFromCart }: CartItemProps) {
       </div>
       <style jsx>{`
         .cartItem {
-          border: solid 1px #aaa;
+          border: solid 1px #333;
           padding: 1rem;
           width: 20rem;
           border-radius: 0.5rem;
