@@ -9,10 +9,10 @@ export {
   emptyShoppingItems,
 } from "library/shopping";
 
-export type FilterBy = "all" | "fruit" | "vegetable" | "meat";
+export type FilterBy = "All" | "Fruit" | "Vegetable" | "Meat";
 
 export function filterShoppingItemsBy(items: ShoppingItems, by: FilterBy) {
   return filterShoppingItems(items, (item) =>
-    by === "all" ? true : item.type === by
+    by === "All" ? true : item.type === by
   );
 }

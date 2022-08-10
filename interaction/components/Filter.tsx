@@ -18,10 +18,10 @@ export default function Filter({ by, onFilter }: FilterProps) {
   return (
     <>
       <div className="filter">
-        <Button {...props("all")}>All</Button>
-        <Button {...props("fruit")}>Fruit</Button>
-        <Button {...props("vegetable")}>Vegetable</Button>
-        <Button {...props("meat")}>Meat</Button>
+        <Button {...props("All")}>All</Button>
+        <Button {...props("Fruit")}>Fruit</Button>
+        <Button {...props("Vegetable")}>Vegetable</Button>
+        <Button {...props("Meat")}>Meat</Button>
       </div>
       <style jsx>{`
         .filter > :global(*) + :global(*) {

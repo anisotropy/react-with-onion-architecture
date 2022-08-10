@@ -12,5 +12,5 @@ type ShoppingStatus = {
 
 export const shoppingStatus = atom<ShoppingStatus>({
   key: "shoppingStatus",
-  default: { filterBy: "all" },
+  default: { filterBy: "All" },
 });

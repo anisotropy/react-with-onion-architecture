@@ -14,18 +14,18 @@ export default function items(
   res: NextApiResponse<Items>
 ) {
   const items = [
-    { id: 1, name: "banana", type: "fruit", price: 20900 },
-    { id: 2, name: "apple", type: "fruit", price: 44500 },
-    { id: 3, name: "grape", type: "fruit", price: 49900 },
-    { id: 4, name: "watermelon", type: "fruit", price: 42190 },
-    { id: 5, name: "lettuce", type: "vegetable", price: 16900 },
-    { id: 6, name: "onion", type: "vegetable", price: 12900 },
-    { id: 7, name: "cucumber", type: "vegetable", price: 17900 },
-    { id: 8, name: "spinach", type: "vegetable", price: 2950 },
-    { id: 9, name: "pork", type: "meat", price: 7800 },
-    { id: 10, name: "beef", type: "meat", price: 99000 },
-    { id: 11, name: "chicken", type: "meat", price: 9200 },
-    { id: 12, name: "duck", type: "meat", price: 9600 },
+    { id: 1, name: "Banana", type: "Fruit", price: 20900 },
+    { id: 2, name: "Apple", type: "Fruit", price: 44500 },
+    { id: 3, name: "Grape", type: "Fruit", price: 49900 },
+    { id: 4, name: "Watermelon", type: "Fruit", price: 42190 },
+    { id: 5, name: "Lettuce", type: "Vegetable", price: 16900 },
+    { id: 6, name: "Onion", type: "Vegetable", price: 12900 },
+    { id: 7, name: "Cucumber", type: "Vegetable", price: 17900 },
+    { id: 8, name: "Spinach", type: "Vegetable", price: 2950 },
+    { id: 9, name: "Pork", type: "Meat", price: 7800 },
+    { id: 10, name: "Beef", type: "Meat", price: 99000 },
+    { id: 11, name: "Chicken", type: "Meat", price: 9200 },
+    { id: 12, name: "Duck", type: "Meat", price: 9600 },
   ];
   res.status(200).json(items);
 }
