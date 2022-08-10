@@ -1,16 +1,17 @@
 import Link from "next/link";
+import Anchor from "./layer/layer/Anchor";
 
 export default function Navbar() {
   return (
     <nav>
-      <Link href="/">
-        <a>Home</a>
+      <Link href="/" passHref>
+        <Anchor>Home</Anchor>
       </Link>
-      <Link href="/shopping">
-        <a>Shopping</a>
+      <Link href="/shopping" passHref>
+        <Anchor>Shopping</Anchor>
       </Link>
-      <Link href="/cart">
-        <a>Cart</a>
+      <Link href="/cart" passHref>
+        <Anchor>Cart</Anchor>
       </Link>
       <style jsx>{`
         a + a {
