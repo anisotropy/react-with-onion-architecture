@@ -18,8 +18,7 @@ export default function Layout({ children }: LayoutProps) {
           padding: 1rem;
         }
         main {
-          margin: 1rem;
-          min-height: 200px;
+          margin: 1rem 0;
         }
       `}</style>
     </>
