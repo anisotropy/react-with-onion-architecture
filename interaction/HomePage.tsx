@@ -1,3 +1,3 @@
 export default function HomePage() {
-  return <div>Hello</div>;
+  return <h1>React with Onion Architecture</h1>;
 }
