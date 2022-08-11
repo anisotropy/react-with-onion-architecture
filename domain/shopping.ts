@@ -8,13 +8,14 @@ export {
   readShoppingItem,
   setShoppingItems,
   updateShoppingItem,
+  filterShoppingItems,
   emptyShoppingItems,
 } from "library/shopping";
 
-export type FilterBy = "All" | "Fruit" | "Vegetable" | "Meat";
+// export type FilterBy = "All" | "Fruit" | "Vegetable" | "Meat";
 
-export function filterShoppingItemsBy(items: ShoppingItems, by: FilterBy) {
-  return filterShoppingItems(items, (item) =>
-    by === "All" ? true : item.type === by
-  );
-}
+// export function filterShoppingItemsBy(items: ShoppingItems, by: FilterBy) {
+//   return filterShoppingItems(items, (item) =>
+//     by === "All" ? true : item.type === by
+//   );
+// }

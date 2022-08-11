@@ -1,14 +1,17 @@
 import axios, { AxiosResponse } from "axios";
-import {
-  addShoppingItem,
-  FilterBy,
-  filterShoppingItemsBy,
-} from "domain/shopping";
-import { objectSet } from "domain/common";
-import { useEffect, useMemo } from "react";
-import { useRecoilState } from "recoil";
+import { addShoppingItem } from "domain/shopping";
+import { useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import useSWR from "swr";
-import { shoppingState, shoppingStatus } from "./layer/states/shopping";
+import {
+  displayedShoppingState,
+  shoppingState,
+  shoppingStatusState,
+} from "./layer/states/shopping";
+import {
+  setShoppingStatus,
+  ShoppingStatus,
+} from "./layer/states/library/shopping";
 
 type Item = {
   id: number;
@@ -23,7 +26,7 @@ export default function useShoppingItems() {
     axios.get
   );
   const [items, setItems] = useRecoilState(shoppingState);
-  const [status, setStatus] = useRecoilState(shoppingStatus);
+  const [status, setStatus] = useRecoilState(shoppingStatusState);
   const { filterBy } = status;
 
   useEffect(() => {
@@ -31,17 +34,12 @@ export default function useShoppingItems() {
     setItems((items) => addShoppingItem(items, ...data.data));
   }, [data, setItems]);
 
-  const setFilterBy = (by: FilterBy) => {
-    setStatus((prevStatus) => objectSet(prevStatus, "filterBy", by));
+  const setFilterBy = (filterBy: ShoppingStatus["filterBy"]) => {
+    setStatus((prevStatus) => setShoppingStatus(prevStatus, { filterBy }));
   };
 
-  const displayedItems = useMemo(
-    () => filterShoppingItemsBy(items, filterBy),
-    [items, filterBy]
-  );
-
   return {
-    items: displayedItems,
+    items: useRecoilValue(displayedShoppingState),
     setItems,
     filterBy,
     setFilterBy,
