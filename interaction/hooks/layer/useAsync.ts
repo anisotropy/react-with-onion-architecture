@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useAsync<T, R>(
+export default function useAsync<T, R>(
   asyncFunc: (arg?: T) => Promise<R>,
   onSuccess?: (res: R) => void | Promise<void>,
   onError?: (error: unknown) => void | Promise<void>

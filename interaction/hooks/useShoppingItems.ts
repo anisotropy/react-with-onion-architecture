@@ -8,7 +8,7 @@ import { objectSet } from "domain/common";
 import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import useSWR from "swr";
-import { shoppingState, shoppingStatus } from "./states/shopping";
+import { shoppingState, shoppingStatus } from "./layer/states/shopping";
 
 type Item = {
   id: number;
