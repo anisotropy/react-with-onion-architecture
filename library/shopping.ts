@@ -85,12 +85,15 @@ export function decreaseShoppingItem(items: ShoppingItems, id: number) {
   }
 }
 
-export function initShoppingItem(items: ShoppingItems, id: number) {
+export function setShoppingItems(
+  items: ShoppingItems,
+  modify: (item: ShoppingItem) => ShoppingItem
+) {
   return objectReduce(
     items,
     (result, item) => {
       const id = readShoppingItem(item, "id");
-      result[id] = updateShoppingItem(item, { quantity: 0 });
+      result[id] = modify(item);
       return result;
     },
     {} as ShoppingItems

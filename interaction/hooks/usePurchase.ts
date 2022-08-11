@@ -1,21 +1,28 @@
 import axios from "axios";
-import { Cart } from "domain/cart";
 import { useCallback } from "react";
-import { useAsync } from "./layer/layer/common";
-import { useCartState } from "./layer/useCart";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { convCartItemsToPurchaseReq, PurchaseRes } from "./states/library/cart";
+import { cartState } from "./states/cart";
+import { useAsync } from "./states/library/common";
+import { emptyCart } from "domain/cart";
+import { setShoppingItems as setShItems } from "domain/shopping";
+import { shoppingState } from "./states/shopping";
+import { updateShoppingItem } from "domain/shopping";
 
-type PurchaseRes = { cart: Cart };
+export default function usePurchase() {
+  const [cartItems, setCartItems] = useRecoilState(cartState);
+  const setShoppingItems = useSetRecoilState(shoppingState);
 
-export default function usePurchase(cart: Cart) {
-  const fetcher = useCallback(async () => {
-    return await axios.post<PurchaseRes>("/api/purchase", cart);
-  }, [cart]);
+  const asyncFunc = useCallback(async () => {
+    const items = convCartItemsToPurchaseReq(cartItems);
+    const { data } = await axios.post<PurchaseRes>("/api/purchase", items);
+    return data.purchasedItems;
+  }, [cartItems]);
 
-  const cartItems = useCartState();
-
-  const { data, error, callback, reset } = useAsync(fetcher, () => {
-    cartItems.initialize();
+  return useAsync(asyncFunc, () => {
+    setCartItems(emptyCart);
+    setShoppingItems((items) =>
+      setShItems(items, (item) => updateShoppingItem(item, { quantity: 0 }))
+    );
   });
-
-  return { items: data?.data.cart, error, callback, reset };
 }

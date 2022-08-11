@@ -73,18 +73,11 @@ export function countCartItems(items: CartItems) {
   return objectLength(items);
 }
 
-export function calcPrice(
+export function cartItemsSum(
   items: CartItems,
-  predicate: (item: CartItem) => boolean
+  read: (item: CartItem) => number
 ) {
-  return objectReduce(
-    items,
-    (totalPrice, item) =>
-      predicate(item)
-        ? totalPrice + readCartItem(item, "totalPrice")
-        : totalPrice,
-    0
-  );
+  return objectReduce(items, (sum, item) => sum + read(item), 0);
 }
 
 export function sortCartItems(

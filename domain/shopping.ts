@@ -6,6 +6,8 @@ export {
   addShoppingItem,
   mapShoppingItems,
   readShoppingItem,
+  setShoppingItems,
+  updateShoppingItem,
   emptyShoppingItems,
 } from "library/shopping";
 

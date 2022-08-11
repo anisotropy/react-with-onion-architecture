@@ -6,4 +6,6 @@ export {
   countCartItems,
   readCartItem,
   subtractFromCart,
+  mapCartItems,
+  cartItemsSum,
 } from "library/cart";
