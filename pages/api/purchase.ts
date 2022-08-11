@@ -1,22 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type CartItem = {
+type PurchasedItem = {
   id: number;
   name: string;
-  amount: number;
-  shipping: number;
+  type: string;
+  price: string;
+  quantity: number;
 };
 
-type Cart = CartItem[];
+type Response = { purchasedItems: PurchasedItem[] };
 
-type Request = Cart;
-
-type Response = { cart: Cart };
+type Request = PurchasedItem[];
 
 export default function items(
   req: NextApiRequest,
   res: NextApiResponse<Response>
 ) {
-  const cart = req.body as Request;
-  res.status(200).json({ cart });
+  const purchasedItems = req.body as Request;
+
+  res.status(200).json({ purchasedItems });
 }
