@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   emptyShoppingItems,
   readShoppingItem,
@@ -29,4 +30,18 @@ export const displayedShoppingState = selector({
   },
 });
 
-// TODO: SWR을 Recoil로 대체
+type Item = {
+  id: number;
+  name: string;
+  type: string;
+  price: number;
+};
+
+// TODO: 상태이름 변경 필요 shoppingAsyncState -> ?
+export const shoppingAsyncState = selector({
+  key: "shoppingAsyncState",
+  get: async ({ get }) => {
+    const { data: fetched } = await axios.get<Item[]>("/api/items");
+    return fetched;
+  },
+});

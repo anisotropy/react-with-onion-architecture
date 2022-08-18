@@ -1,17 +1,15 @@
 import { addToCart } from "domain/cart";
 import { getShoppingItem, increateShoppingItem } from "library/shopping";
+import { Suspense, useEffect, useState } from "react";
 import Filter from "./components/Filter";
 import ShoppingLayout from "./components/ShoppingLayout";
 import { ShoppingList } from "./components/ShoppingList";
 import useCart from "./hooks/useCart";
 import useShoppingItems from "./hooks/useShoppingItems";
 
-export default function ShoppingPage() {
+function ShoppingPage() {
   const shopping = useShoppingItems();
   const cart = useCart();
-
-  if (shopping.isError) return <div>Failed to load</div>;
-  if (shopping.isLoading) return <div>Loading...</div>;
 
   const onAddToCart = (id: number) => {
     const item = getShoppingItem(shopping.items, id);
@@ -28,5 +26,24 @@ export default function ShoppingPage() {
       filter={<Filter by={shopping.filterBy} onFilter={onFilter} />}
       list={<ShoppingList items={shopping.items} onAddToCart={onAddToCart} />}
     />
+  );
+}
+
+// TODO: Suspense를 wrapping하는 HOC 필요
+export default function ShoppingPageWithSuspense() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const Loading = <div>Loading ...</div>;
+
+  return mounted ? (
+    <Suspense fallback={Loading}>
+      <ShoppingPage />
+    </Suspense>
+  ) : (
+    Loading
   );
 }
