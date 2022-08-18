@@ -1,5 +1,4 @@
 import { addToCart } from "domain/cart";
-import { FilterBy, filterShoppingItemsBy } from "domain/shopping";
 import { getShoppingItem, increateShoppingItem } from "library/shopping";
 import Filter from "./components/Filter";
 import ShoppingLayout from "./components/ShoppingLayout";
@@ -20,7 +19,7 @@ export default function ShoppingPage() {
     cart.setItems((items) => addToCart(items, item));
   };
 
-  const onFilter = (by: FilterBy) => {
+  const onFilter = (by: Parameters<typeof shopping.setFilterBy>[0]) => {
     shopping.setFilterBy(by);
   };
 

@@ -1,6 +1,7 @@
-import { FilterBy } from "domain/shopping";
 import { useCallback } from "react";
 import Button from "./layer/layer/Button";
+
+type FilterBy = "All" | "Fruit" | "Vegetable" | "Meat";
 
 type FilterProps = { by: FilterBy; onFilter: (by: FilterBy) => void };
 
