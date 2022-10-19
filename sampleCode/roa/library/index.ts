@@ -1,6 +1,6 @@
-export type { Cart } from "./cart";
+export type { Cart } from "./cart/cart";
 
-export type { Item } from "./layer/item";
+export type { Item } from "./cart/item/item";
 
 export {
   mapCart,
@@ -8,11 +8,11 @@ export {
   createEmptyCart,
   countItems,
   findItem,
-} from "./cart";
+} from "./cart/cart";
 
 export {
   hasItemProp,
   updateItem,
   readItemProp,
   createItem,
-} from "./layer/item";
+} from "./cart/item/item";

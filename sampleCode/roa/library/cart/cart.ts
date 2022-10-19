@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { hasItemProp, Item } from "./layer/item";
+import { hasItemProp, Item } from "./item/item";
 
 export type Cart = Item[];
 

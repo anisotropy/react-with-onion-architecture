@@ -1,1 +1,1 @@
-export { default as Commodity } from "./Commodity";
+export { default as Commodity } from "./layer/Commodity";
