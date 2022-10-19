@@ -1,5 +1,7 @@
 # 계층형 구조와 어니언 아키텍처
 
+참고: [에릭 노먼드 <쏙쏙 들어오는 함수형 코딩>, 제이펍, 2022](http://www.yes24.com/Product/Goods/108748841)
+
 ## 함수형 프로그래밍
 
 - 액션(비순수함수)을 최소화하고 계산(순수함수)을 최대화한다
@@ -13,49 +15,49 @@
 
 ```mermaid
 flowchart TD
-	subgraph A["Action(Interaction)"]
-		subgraph L1["Layer 1"]
-			PC["purchase"]
-			AC["addCommodity"]
-		end
-		subgraph L2["Layer 2"]
-			SC["setCart"]
-			GC["getCart"]
-		end
-	end
-	subgraph C["Calculation(Domain)"]
-		subgraph L3["Layer 3"]
-			ATC["addToCart"]
-		end
-		subgraph L4["Layer 4"]
-			SOWD["shouldOfferWatchDiscount"]
-			OWD["offerWatchDiscount"]
-		end
-		subgraph L5["Layer 5"]
-			AITC["addItemToCart"]
-			MC["mapCart"]
-			CI["countItems"]
-			FI["findItem"]
-		end
-		subgraph L6["Layer 6"]
-			RIP["readItemProp"]
-			HIP["hasItemProp"]
-			UI["updateItem"]
-		end
-	end
-	AC --> GC
-	AC --> SC
-	AC --> ATC
-	ATC --> AITC
-	ATC --> SOWD
-	ATC --> OWD
-	SOWD --> CI
-	SOWD --> FI
-	OWD --> MC
-	OWD --> HIP
-	OWD --> UI
-	OWD --> RIP
-	FI --> HIP
+  subgraph A["Action(Interaction)"]
+    subgraph L1["Layer 1"]
+      PC["purchase"]
+      AC["addCommodity"]
+    end
+    subgraph L2["Layer 2"]
+      SC["setCart"]
+      GC["getCart"]
+    end
+  end
+  subgraph C["Calculation(Domain)"]
+    subgraph L3["Layer 3"]
+      ATC["addToCart"]
+    end
+    subgraph L4["Layer 4"]
+      SOWD["shouldOfferWatchDiscount"]
+      OWD["offerWatchDiscount"]
+    end
+    subgraph L5["Layer 5"]
+      AITC["addItemToCart"]
+      MC["mapCart"]
+      CI["countItems"]
+      FI["findItem"]
+    end
+    subgraph L6["Layer 6"]
+      RIP["readItemProp"]
+      HIP["hasItemProp"]
+      UI["updateItem"]
+    end
+  end
+  AC --> GC
+  AC --> SC
+  AC --> ATC
+  ATC --> AITC
+  ATC --> SOWD
+  ATC --> OWD
+  SOWD --> CI
+  SOWD --> FI
+  OWD --> MC
+  OWD --> HIP
+  OWD --> UI
+  OWD --> RIP
+  FI --> HIP
 
 ```
 
@@ -95,16 +97,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-	subgraph I["Interaction (action)"]
-		CA["Component"]
-		CA --> HA["Hook"] --> S["Global State"]
-	end
-	subgraph C["Components"]
-		CC["Component"] --> HC["Hook"]
-	end
-	I --> C
-	C --> D["Domain"]
-	D --> L["Library"]
+  subgraph I["Interaction (action)"]
+    CA["Component"]
+    CA --> HA["Hook"] --> S["Global State"]
+  end
+  subgraph C["Components"]
+    CC["Component"] --> HC["Hook"]
+  end
+  I --> C
+  C --> D["Domain"]
+  D --> L["Library"]
 
 ```
 
