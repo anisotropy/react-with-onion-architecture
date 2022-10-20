@@ -46,6 +46,7 @@ flowchart TD
       UI["updateItem"]
     end
   end
+	PC --> GC
   AC --> GC
   AC --> SC
   AC --> ATC
